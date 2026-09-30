@@ -1,0 +1,72 @@
+# Godot 缓存与生成的 Android 工程
+.godot/
+/android/
+
+# 本地插件与 Agent 技能
+/addons/
+/.agents/
+
+# 导出与构建产物
+/build/
+/dist/
+/export/
+/exports/
+/api/build/
+/api/dist/
+
+# Python 虚拟环境、字节码与打包缓存
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+
+# Python 检查与覆盖率产物
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# 本地模型地址、密钥等环境配置；保留可提交的配置模板
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# 本地 SQLite 数据及事务辅助文件
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite*-wal
+*.sqlite*-shm
+*.sqlite*-journal
+
+# 运行日志与临时文件
+*.log
+*.log.*
+/logs/
+/api/logs/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# 操作系统与本地 IDE 文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+*.code-workspace
+
+# 保留 Godot 的 *.uid、*.import、export_presets.cfg，
+# 以及共享编辑器配置和依赖锁文件。
