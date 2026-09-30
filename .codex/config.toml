@@ -1,0 +1,6 @@
+# Godot MCP Native 1.0.8; the editor must have this project open.
+[mcp_servers.godot-mcp]
+url = "http://127.0.0.1:9080/mcp"
+enabled = true
+startup_timeout_sec = 20
+tool_timeout_sec = 120

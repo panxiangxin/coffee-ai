@@ -3,8 +3,11 @@
 /android/
 
 # 本地插件与 Agent 技能
-/addons/
-/.agents/
+/.gdmcp/
+
+# 本地验收截图与记录；保留 Godot 忽略标记
+/docs/evidence/*
+!/docs/evidence/.gdignore
 
 # 导出与构建产物
 /build/

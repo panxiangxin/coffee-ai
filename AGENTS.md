@@ -19,9 +19,10 @@
 以下为 2026-09-30 检查结果，后续开发须重新读取工程和 MCP 会话确认现状：
 
 - Godot 项目根目录为本文件所在目录，入口配置为 `project.godot`。MCP 已确认实际编辑器版本为 `4.7.2-stable (official)`。
-- `addons/godot_ai/` 已安装并启用，插件与 MCP 服务版本均为 `3.2.1`；`_mcp_game_helper` 已配置为 Autoload。
-- 当次检查尚无业务场景、业务脚本及测试套件，也未配置主场景；`api/` 尚无后端实现文件。设计目标不能报告为已交付功能。
-- `.godot/` 是生成缓存，不作为业务源码修改。`addons/godot_ai/` 是现有工具依赖，不为普通业务需求修改其内部实现。
+- `addons/godot_mcp/` 已安装并启用，Godot MCP Native 版本为 `1.0.8`；`MCPRuntimeProbe` 已配置为 Autoload。MCP 地址为 `http://127.0.0.1:9080/mcp`，项目级 Codex 配置在 `.codex/config.toml`。
+- 已有 `scenes/cafe_world.tscn`、老板娘与玩家子场景，`scripts/` 中的动作、感知、相机、HUD 和 WebSocket 接线，以及 `api/cafe/` 后端实现。Godot 契约套件已通过 Native MCP + GUT 验证（4 项测试、138 个断言）；Python 用例源码仍不等于执行通过。
+- 当前尚未配置 `application/run/main_scene`，使用 Native MCP `run_project(scene_path="res://scenes/cafe_world.tscn", allow_window=true)` 运行。导航已保存 60 个多边形；规则模式和真实 DeepSeek 模式的历史联调已取得证据，但不等于更换插件后重新通过。Python 专项用例及桌面导出尚未执行。实际选型、启动方式及验证边界见 [开发记录](docs/开发记录.md)。
+- `.godot/` 是生成缓存，不作为业务源码修改。`addons/godot_mcp/` 和 GUT `9.6.1`（`addons/gut/`）是现有工具依赖，不为普通业务需求修改其内部实现。
 
 固定实际 Godot 补丁版本、对应导出模板和插件 tag／提交，不使用 `latest`、`main` 或 `master` 作为长期兼容基线。升级必须对应当前需求，不为追新改变基线。总体规范中的第三方候选不等于已安装或已验证的依赖。
 
@@ -79,30 +80,32 @@ Phantom Camera、State Charts、LimboAI、Dialogue Manager、GUT、GdUnit4 等�
 
 ## 6. 场景操作与测试统一使用 MCP
 
-**场景创建和修改、节点／资源配置、运行与停止、交互模拟、截图、日志读取、功能测试和联调验收均通过 MCP 执行。Godot 操作使用现有 `godot_ai` MCP，不另建测试工具链。** 文档和源码的普通文件读写、搜索、静态审查可用常规文件工具；这些操作不等于运行验证。
+**场景创建和修改、节点／资源配置、运行与停止、交互模拟、截图、日志读取、功能测试和联调验收均通过 Godot MCP Native 执行，不另建测试工具链。** 文档和源码的普通文件读写、搜索、静态审查可用常规文件工具；这些操作不等于运行验证。
 
 不得绕过 MCP，改用直接启动 Godot CLI／headless、操作系统鼠标键盘脚本或另起场景驱动进程完成测试。MCP 能执行的验证由 Agent 完成，不默认让用户手动点击或截图。
 
-### 6.1 操作流程
+### 6.1 配置与操作流程
 
-1. 通过 `session_manage(op="list")` 找到本项目，核对 `project_path`、Godot／插件版本和状态。多会话时明确指定 `session_id` 或激活正确会话；会话 ID 每次发现，不硬编码历史值。
-2. 通过 `editor_state` 和场景读取工具确认当前场景、运行状态及待保留的编辑。操作共享编辑器状态按顺序执行，不并行切场景和写节点。
-3. 场景使用 `scene_manage`、`scene_open`、`node_*`、资源及信号工具修改；先检查已有节点再写入。完成后用 `scene_save` 或 `scene_manage(op="save_as")` 保存，核对路径和层级。不得用手写 `.tscn` 绕过场景操作要求。
-4. GDScript 可使用 `script_create`／`script_patch`；外部修改源码后，通过 MCP 确认编辑器已识别变更并检查错误。`scene_open` 未确认切换完成时先查状态；不得用 `force_reload` 丢弃未保存修改。
-5. 通过 `project_run(mode="main"|"current"|"custom")` 运行目标场景；切换运行场景前先 `project_manage(op="stop")`。检查 `game_status`、helper 和运行就绪状态，不能只凭调用成功判断启动完成。
-6. 用 `game_manage` 检查运行树、节点和 UI，再注入真实输入；时间敏感操作优先 `input_sequence`，按下后对应释放。通过实际交互触发后端／模型链路，不直接把业务状态改成成功作为验收。
-7. 通过 `editor_screenshot(source="game")`、运行节点状态、`logs_read(source="editor")` 和 `logs_read(source="game")` 取证。编辑器视口截图不能替代运行画面；游戏日志为空不能排除启动解析错误；旧日志或过期画面不能当作本次证据。
+1. Codex 使用项目 `.codex/config.toml` 的 `mcp_servers.godot-mcp`，通过 HTTP 连接 `http://127.0.0.1:9080/mcp`；Godot 编辑器须打开本项目并启用插件。以 `get_project_info` 核对 `project_path` 和引擎版本；多项目时先确认端点属于当前工程，不复用其他项目的连接。
+2. 通过 `get_editor_state`、`get_current_scene`、`list_open_scenes` 确认当前场景及待保留的编辑，通过 `get_debugger_sessions` 核对运行状态。操作共享编辑器状态按顺序执行，不并行切场景和写节点，不强制重载丢弃未保存修改。
+3. 场景使用 `open_scene`、`create_scene`、`create_node`、`update_node_property`、资源及信号工具修改；先检查已有节点再写入。完成后用 `save_scene` 保存，核对路径和层级。不得用手写 `.tscn` 绕过场景操作要求。当前 Vibe Coding 模式下，已获任务授权的编辑器切场景须传 `allow_ui_focus=true`，运行窗口操作须传 `allow_window=true`，不必为这两个工具参数重复请求批准。
+4. GDScript 可使用 `create_script`／`modify_script`，通过 `validate_script` 检查解析。外部修改源码后用 `reload_project` 让编辑器扫描，再检查解析和日志；解析通过不等于功能测试通过。
+5. 通过 `run_project(scene_path="res://scenes/cafe_world.tscn", allow_window=true)` 运行目标场景；切换运行场景前先 `stop_project(allow_window=true)`。用 `get_debugger_sessions`、`get_runtime_info`、`await_scene_ready` 确认实际场景与运行探针就绪，不能只凭调用成功判断启动完成。
+6. 用 `get_runtime_scene_tree`、`inspect_runtime_node` 检查运行节点和 UI，再通过 `simulate_runtime_input_event`／`simulate_runtime_input_action` 注入真实输入，按下后对应释放。通过实际交互触发后端／模型链路，不直接把业务状态改成成功作为验收。
+7. 通过 `get_runtime_screenshot`、运行节点状态、`get_editor_logs(source="editor_panel")` 和 `get_editor_logs(source="runtime")` 取证。编辑器视口截图不能替代运行画面；游戏日志为空不能排除启动解析错误；旧日志或过期画面不能当作本次证据。
 8. 完成后释放测试输入，停止本次启动且无需保留的运行，清理本次无用临时场景、脚本及对应生成文件，不影响用户已有工作。
 
-工具能力及参数以当前 MCP 声明为准；不确定 Godot API 时可用 `api_manage(op="get_class")` 核对实际引擎信息。不得编造工具、参数或返回结果。
+工具名称、能力和参数以当前 MCP `tools/list` 声明为准；不确定 Godot API 时用 `get_class_api_metadata` 核对实际引擎信息。仓库附带的 `gdmcp` CLI 是同一 MCP 服务的可选客户端，不替代当前 Codex 的 HTTP 配置；禁止将其误当作直接运行 Godot 的许可。
 
 ### 6.2 自动测试与能力缺口
 
-- 有适配现有 MCP 测试入口的套件时，使用 `test_run` 执行相关套件／用例，使用 `test_manage(op="results_get")` 查看结果。当前入口发现 `res://tests/test_*.gd` 中的 `test_*` 方法；它不是任意 Python、GUT 或 GdUnit4 套件的通用运行命令。
-- 先确认测试要求的场景已打开；出现 `scene_warning` 时纠正场景后重试。`test_run` 不放入 `batch_execute`。零测试、未执行、超时或只取得旧结果均不算通过。
-- 现有 MCP 测试能力足够时直接复用，不为符合候选清单安装 GUT／GdUnit4；确有缺口时再择一评估，并核实可用的 MCP 执行入口，不自写通用运行器。
-- 后端与真实模型联调由 MCP 驱动游戏交互触发，结合回执和可见状态核验。专项后端测试、导出等若无可用 MCP 能力，明确记录未验证范围；不得声称 `test_run` 已覆盖它们，也不自行改用 CLI 绕过本规则。
-- MCP 未连接或能力不足时，先检查会话、项目路径、插件状态和已暴露工具；仍无法执行则继续可做的文件编辑和静态检查，说明具体阻塞与缺失验证，不虚报场景通过，不为绕过问题重写插件。
+- 已将四项契约测试迁移到 `test/test_cafe_contract.gd`，复用 GUT `9.6.1`。通过 `list_project_tests(search_path="res://test/")` 发现，再用 `run_project_test(test_path="res://test/test_cafe_contract.gd")` 执行并核对输出中的实际测试／断言数量和退出码。
+- Native `1.0.8` 的测试入口限定 `res://test/` 或其认可的临时测试目录，支持 Python 脚本与 GUT；GUT 由该 MCP 工具内部启动 headless。Agent 不另行从终端启动引擎。契约套件实例化保存的场景并隔离后台连接，检查结构和注册数据，不代表真实运动或模型联调。
+- 零测试、未执行、超时、跳过或只取得旧结果均不算通过。更换 MCP 插件后，历史测试记录只代表当时的验证，不作为新插件的通过证据。
+- 现有 MCP 与 GUT 测试能力足够时直接复用，不再安装同类框架，不自写通用运行器。
+- 后端与真实模型联调由 MCP 驱动游戏交互触发，结合回执和可见状态核验。Python 用例还须满足路径、解释器与依赖要求；不能仅因 Native 提供 Python 入口就声称 `api/tests/` 已运行。导出等未执行范围明确记录，不自行改用 CLI 绕过本规则。
+- 用户要求的独立 Harness Web 调试台只需 Python 后端，不依赖 Godot 编辑器或游戏；可直接启动后端服务，通过浏览器 MCP 验证。其手动模拟回执和独立调试数据库仅用于检查 Harness，不作为真实 Godot 动作通过的证据；真实场景联调仍遵守上述 Godot MCP 流程。
+- MCP 未连接或能力不足时，先检查编辑器、本项目路径、插件启用状态、9080 端点及实际工具表。仍无法执行则继续可做的文件编辑和静态检查，说明具体阻塞与缺失验证，不虚报场景通过，不为绕过问题重写插件。
 
 ## 7. 按可见行为验收
 

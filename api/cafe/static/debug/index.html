@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>咖啡馆 · Harness 调试台</title>
+  <link rel="stylesheet" href="/debug/debug.css">
+  <script src="/debug/debug.js" type="module"></script>
+</head>
+<body data-workspace="trace">
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M7 14h20v9a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8v-9Z" stroke="currentColor" stroke-width="1.8"/><path d="M27 16h2a4 4 0 0 1 0 8h-2M12 4v5m6-7v7m6-5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <div><span class="eyebrow">CAFE / HARNESS LAB</span><h1>咖啡馆调试台</h1></div>
+    </div>
+    <div class="scope-switch" role="group" aria-label="调试范围">
+      <button type="button" class="scope-button is-active" data-scope="lab" aria-pressed="true">独立调试</button>
+      <button type="button" class="scope-button" data-scope="godot" aria-pressed="false">实时 Godot</button>
+    </div>
+    <div class="session-controls">
+      <label class="sr-only" for="mode-select">启动模式</label>
+      <select id="mode-select"><option value="model">真实模型</option><option value="rule">规则联调</option></select>
+      <button type="button" id="start-session" class="button primary" disabled>启动会话</button>
+      <button type="button" id="stop-session" class="button" disabled>停止</button>
+      <a id="export-log" class="button export-button is-disabled" href="/debug/api/export?scope=lab" download aria-disabled="true">导出 JSONL <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <nav class="workspace-nav" aria-label="工作区">
+    <button type="button" class="workspace-button is-active" data-workspace="trace" aria-pressed="true">流程与调用</button>
+    <button type="button" class="workspace-button" data-workspace="interact" aria-pressed="false">交互测试 <span id="interaction-count" class="nav-count" hidden></span></button>
+    <span class="workspace-hint" id="workspace-hint">从玩家输入追到数据、决策与输出</span>
+  </nav>
+
+  <div class="connection-strip">
+    <span class="connection-status" id="connection-status"><span class="status-dot"></span><span id="connection-text">正在连接后端</span></span>
+    <span id="model-status" class="muted">等待模型状态</span>
+    <span id="session-label" class="mono session-label">session —</span>
+    <span id="sync-label" class="sync-label">等待首次同步</span>
+  </div>
+  <div id="scope-notice" class="scope-notice"><span class="notice-label">独立运行</span><span id="scope-notice-text">只需后端，无需启动 Godot。动作可手动回传完成、失败或暂停。</span></div>
+  <div id="connection-error" class="error-banner" role="alert" hidden><span id="connection-error-text"></span><button type="button" id="retry-connection" class="text-button">立即重试</button></div>
+
+  <main class="workspace">
+    <aside class="column input-column" aria-labelledby="input-heading">
+      <div class="column-heading"><div><span class="eyebrow">INPUT</span><h2 id="input-heading">玩家输入</h2></div></div>
+      <div class="input-scroll">
+        <section class="player-section">
+          <div class="section-line"><h3>当前身份</h3><span id="player-presence" class="badge">未入店</span></div>
+          <div class="player-switch" role="group" aria-label="选择测试玩家">
+            <button type="button" class="player-button is-active" data-player="p_A" aria-pressed="true"><span class="avatar avatar-a">A</span><span>顾客 A<small>p_A</small></span><span class="presence-dot" data-presence="p_A"></span></button>
+            <button type="button" class="player-button" data-player="p_B" aria-pressed="false"><span class="avatar avatar-b">B</span><span>顾客 B<small>p_B</small></span><span class="presence-dot" data-presence="p_B"></span></button>
+          </div>
+          <div class="button-row"><button type="button" id="enter-player" class="button" disabled>入店</button><button type="button" id="leave-player" class="button" disabled>离店</button></div>
+          <p id="presence-help" class="helper">启动独立会话后，选择玩家并入店。</p>
+        </section>
+
+        <form id="utterance-form" class="compose-section">
+          <label for="target-select">说给谁听</label>
+          <select id="target-select"><option value="npc_owner">老板娘 · npc_owner</option><option value="room">公共话题 · room</option><option value="p_A">顾客 A · p_A</option><option value="p_B">顾客 B · p_B</option></select>
+          <label for="utterance-text">玩家发言</label>
+          <textarea id="utterance-text" rows="5" maxlength="2000" placeholder="例如：我想要一杯少糖拿铁。" disabled></textarea>
+          <div class="compose-footer"><span class="helper"><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span><span id="character-count" class="mono muted">0 / 2000</span></div>
+          <button type="submit" id="send-utterance" class="button primary full-width" disabled>发送发言 <span aria-hidden="true">↗</span></button>
+        </form>
+
+        <section class="example-section"><h3>填入示例</h3><div class="example-list"><button type="button" class="example-button" data-example="我想要一杯少糖拿铁。">少糖拿铁</button><button type="button" class="example-button" data-example="继续上次那个手冲话题吧。">继续旧话题</button><button type="button" class="example-button" data-example="今天先陪朋友，下次再讲。">今天先陪朋友</button><button type="button" class="example-button" data-example="等一下再拿，我一会儿回来。">暂缓领取</button></div><p class="helper">仅填入输入框，由你决定何时发送。</p></section>
+
+        <section class="direct-section"><div class="section-line"><h3>明确交互</h3><span class="muted small">规则模式也可用</span></div><div class="recipe-row"><label class="sr-only" for="recipe-select">选择饮品</label><select id="recipe-select"><option value="americano">美式</option><option value="latte">拿铁</option><option value="pourover">手冲</option><option value="decaf">低因咖啡</option></select><button type="button" id="order-drink" class="button" disabled>点单</button></div><div class="button-row"><button type="button" id="invite-topic" class="button" disabled>开启手冲话题</button><button type="button" id="ask-menu" class="button" disabled>询问菜单</button></div><div id="context-actions" class="context-actions"></div></section>
+
+        <details class="raw-input-section"><summary>发送原始事件 <span class="mono">JSON</span></summary><p id="raw-input-help" class="helper">仅支持玩家、发言、交互与记忆查询事件。</p><label class="sr-only" for="raw-input">原始事件 JSON</label><textarea id="raw-input" class="code-input" rows="8" spellcheck="false">{
+  "type": "interaction",
+  "player_id": "p_A",
+  "kind": "ask_menu"
+}</textarea><button type="button" id="send-raw" class="button full-width" disabled>发送事件</button></details>
+      </div>
+    </aside>
+
+    <section class="column runtime-column" aria-labelledby="runtime-heading">
+      <div class="column-heading"><div><span class="eyebrow">RUNTIME</span><h2 id="runtime-heading">对话与状态</h2></div><span class="live-tag" id="runtime-tag">等待会话</span></div>
+      <div id="runtime-error" class="inline-error" role="status" hidden></div>
+      <div class="runtime-tabs" role="tablist" aria-label="运行时视图"><button type="button" class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-dialogue" id="tab-dialogue" data-tab="dialogue">对话</button><button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-business" id="tab-business" data-tab="business" tabindex="-1">订单与会话</button><button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-strategy" id="tab-strategy" data-tab="strategy" tabindex="-1">战略</button><button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-memory" id="tab-memory" data-tab="memory" tabindex="-1">记忆</button><button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-raw" id="tab-raw" data-tab="raw" tabindex="-1">原始状态</button></div>
+      <div class="runtime-content">
+        <section id="panel-dialogue" class="tab-panel dialogue-panel" role="tabpanel" aria-labelledby="tab-dialogue"><div id="conversation-feed" class="conversation-feed" aria-label="发言记录"><div class="empty-state"><span class="empty-symbol">“</span><h3>从一句话开始</h3><p>启动会话，让顾客入店。玩家发言与老板娘的回应会按实际顺序出现在这里。</p></div></div><div id="speech-status" class="speech-status" hidden></div><div class="prompt-region"><div class="section-line"><h3>待回应提示</h3><span id="prompt-count" class="mono muted">0</span></div><div id="prompt-list" class="prompt-list"><p class="empty-inline">当前没有需要回应的邀请或确认。</p></div></div></section>
+        <section id="panel-business" class="tab-panel scroll-panel" role="tabpanel" aria-labelledby="tab-business" hidden><div id="business-content"></div></section>
+        <section id="panel-strategy" class="tab-panel scroll-panel" role="tabpanel" aria-labelledby="tab-strategy" hidden><div id="strategy-content"></div></section>
+        <section id="panel-memory" class="tab-panel scroll-panel" role="tabpanel" aria-labelledby="tab-memory" hidden><div class="section-line memory-heading"><h3 id="memory-heading">顾客 A 的记忆</h3><button type="button" id="refresh-memory" class="button compact" disabled>查询记忆</button></div><div id="memory-content"></div></section>
+        <section id="panel-raw" class="tab-panel scroll-panel" role="tabpanel" aria-labelledby="tab-raw" hidden><div class="section-line"><h3>运行时原始快照</h3><button type="button" id="copy-state" class="text-button">复制 JSON</button></div><pre id="runtime-json" class="code-block">{}</pre></section>
+      </div>
+      <section class="action-region"><div class="section-line"><div><h3>动作回执 <span id="action-count" class="mono muted">0</span></h3><p id="action-help" class="helper">仅独立模式可手动模拟执行结果。</p></div><span id="action-mode-tag" class="badge amber">手动模拟</span></div><div id="action-list" class="action-list"><p class="empty-inline">没有等待回执的动作。</p></div></section>
+    </section>
+
+    <aside class="column trace-column" aria-labelledby="trace-heading">
+      <div class="column-heading trace-heading"><div class="trace-heading-title"><button type="button" id="toggle-call-list" class="button compact" aria-expanded="false" aria-controls="trace-browser">调用列表</button><h2 id="trace-heading">调用分析</h2></div><div class="trace-heading-actions"><button type="button" id="previous-call" class="button compact" aria-label="上一条记录">↑ 上一条</button><button type="button" id="next-call" class="button compact" aria-label="下一条记录">↓ 下一条</button><button type="button" id="follow-latest" class="button compact" aria-pressed="true">跟随最新</button></div></div>
+      <div class="trace-workspace">
+      <button type="button" id="close-call-list" class="trace-scrim" aria-label="关闭调用列表" hidden></button>
+      <div id="trace-browser" class="trace-browser">
+      <div class="trace-mode-switch" role="group" aria-label="消息流程、调用与事件日志"><button type="button" class="trace-mode is-active" data-trace-mode="flows" aria-pressed="true">消息流程 <span id="flow-count" class="mono">0</span></button><button type="button" class="trace-mode" data-trace-mode="calls" aria-pressed="false">调用 <span id="call-count" class="mono">0</span></button><button type="button" class="trace-mode" data-trace-mode="events" aria-pressed="false">日志 <span id="event-count" class="mono">0</span></button></div>
+      <div class="trace-tools"><label class="search-wrap"><span aria-hidden="true">⌕</span><input id="trace-search" type="search" placeholder="搜索内容、调用 ID 或序号" aria-label="搜索调用与事件日志"></label><div id="lane-filters" class="lane-filters" role="group" aria-label="调用类型"><button type="button" class="lane-button is-active" data-lane="all" aria-pressed="true">全部</button><button type="button" class="lane-button" data-lane="event" aria-pressed="false"><i class="lane-dot event"></i>事件</button><button type="button" class="lane-button" data-lane="strategy" aria-pressed="false"><i class="lane-dot strategy"></i>战略</button><button type="button" class="lane-button" data-lane="episode" aria-pressed="false"><i class="lane-dot episode"></i>经历</button></div></div>
+      <div id="trace-gap" class="trace-gap" hidden></div>
+      <div id="trace-list" class="trace-list" aria-label="调用列表"><p class="empty-inline">真实模型调用将在这里出现。</p></div>
+      </div>
+      <div id="trace-detail" class="trace-detail"><div class="empty-state"><span class="empty-symbol mono">{ }</span><h3>顺着一次调用看下去</h3><p>选择调用，查看完整请求、响应、采纳结果和耗时。规则模式不会产生模型调用。</p></div></div>
+      </div>
+      <footer class="trace-footer"><span id="trace-sequence" class="mono">seq —</span><span id="log-path" title="">每个会话独立保存日志</span></footer>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

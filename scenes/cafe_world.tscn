@@ -1,0 +1,1205 @@
+[gd_scene format=3 uid="uid://hp0mywi0tdhf"]
+
+[ext_resource type="Script" uid="uid://ds1dn00ijpc6q" path="res://scripts/world/cafe_world.gd" id="1_dmsd5"]
+[ext_resource type="Script" uid="uid://cvcwlufk4t7r2" path="res://scripts/world/cafe_camera.gd" id="1_juyjj"]
+[ext_resource type="Script" uid="uid://g7vrlife5acs" path="res://scripts/ui/cafe_hud.gd" id="2_juyjj"]
+[ext_resource type="NavigationMesh" path="res://resources/cafe_navigation.tres" id="2_q7kny"]
+[ext_resource type="Script" uid="uid://cdu2t5dhw1elw" path="res://scripts/network/harness_client.gd" id="2_uds03"]
+[ext_resource type="Script" uid="uid://b6sff71k6ebo6" path="res://scripts/world/observation_exporter.gd" id="3_mnany"]
+[ext_resource type="Theme" uid="uid://isndo22ermac" path="res://resources/cafe_theme.tres" id="3_uds03"]
+[ext_resource type="Script" uid="uid://dxa36tu04j6u2" path="res://scripts/actions/world_action_driver.gd" id="4_4d2ox"]
+[ext_resource type="PackedScene" uid="uid://81qaf4wqmrk4" path="res://scenes/actors/test_player.tscn" id="5_q7kny"]
+[ext_resource type="PackedScene" uid="uid://ds5hshdbde88y" path="res://scenes/actors/cafe_owner.tscn" id="6_wyylx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01llo"]
+albedo_color = Color(0.6627451, 0.54509807, 0.42745098, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_72e5l"]
+material = SubResource("StandardMaterial3D_01llo")
+size = Vector3(14, 0.3, 13.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dcxev"]
+size = Vector3(14, 0.3, 13.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yqmfx"]
+albedo_color = Color(0.8352941, 0.8039216, 0.73333335, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_dmsd5"]
+material = SubResource("StandardMaterial3D_yqmfx")
+size = Vector3(14, 2.8, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_juyjj"]
+size = Vector3(14, 2.8, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uds03"]
+albedo_color = Color(0.8352941, 0.8039216, 0.73333335, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_mnany"]
+material = SubResource("StandardMaterial3D_uds03")
+size = Vector3(0.25, 2.8, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4d2ox"]
+size = Vector3(0.25, 2.8, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q7kny"]
+albedo_color = Color(0.8352941, 0.8039216, 0.73333335, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_wyylx"]
+material = SubResource("StandardMaterial3D_q7kny")
+size = Vector3(0.25, 2.8, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5kyfo"]
+size = Vector3(0.25, 2.8, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ee7h7"]
+albedo_color = Color(0.28235295, 0.38039216, 0.31764707, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_okd8c"]
+material = SubResource("StandardMaterial3D_ee7h7")
+size = Vector3(5, 1.1, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wm4ec"]
+size = Vector3(5, 1.1, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0f37"]
+albedo_color = Color(0.28235295, 0.38039216, 0.31764707, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_tp7o8"]
+material = SubResource("StandardMaterial3D_y0f37")
+size = Vector3(5, 1.1, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dkh7j"]
+size = Vector3(5, 1.1, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8y1kl"]
+albedo_color = Color(0.41960785, 0.28235295, 0.2, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_sbae0"]
+material = SubResource("StandardMaterial3D_8y1kl")
+size = Vector3(6, 1, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c2f84"]
+size = Vector3(6, 1, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ojnm5"]
+albedo_color = Color(0.93333334, 0.89411765, 0.8117647, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_a4wia"]
+material = SubResource("StandardMaterial3D_ojnm5")
+size = Vector3(6.15, 0.12, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vinsi"]
+albedo_color = Color(0.36862746, 0.44705883, 0.3764706, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_t4nbs"]
+material = SubResource("StandardMaterial3D_vinsi")
+size = Vector3(7, 2, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sskvo"]
+size = Vector3(7, 2, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5jne3"]
+albedo_color = Color(0.85882354, 0.7764706, 0.627451, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_q1lan"]
+material = SubResource("StandardMaterial3D_5jne3")
+size = Vector3(7, 0.12, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3wyp3"]
+albedo_color = Color(0.13725491, 0.22352941, 0.20392157, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_x5c41"]
+material = SubResource("StandardMaterial3D_3wyp3")
+size = Vector3(1.1, 0.58, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4xd0"]
+albedo_color = Color(0.69411767, 0.7176471, 0.654902, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_lmm6b"]
+material = SubResource("StandardMaterial3D_g4xd0")
+size = Vector3(0.78, 0.29, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8kdbr"]
+albedo_color = Color(0.19215687, 0.21568628, 0.21960784, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_0yhmn"]
+material = SubResource("StandardMaterial3D_8kdbr")
+size = Vector3(0.09, 0.2, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gkvk5"]
+albedo_color = Color(0.87058824, 0.7647059, 0.60784316, 1)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cwj4s"]
+material = SubResource("StandardMaterial3D_gkvk5")
+top_radius = 0.72
+bottom_radius = 0.72
+height = 0.12
+radial_segments = 32
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cj3tc"]
+albedo_color = Color(0.29803923, 0.33333334, 0.29803923, 1)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bhde7"]
+material = SubResource("StandardMaterial3D_cj3tc")
+top_radius = 0.1
+bottom_radius = 0.32
+height = 0.72
+radial_segments = 16
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2wmnp"]
+size = Vector3(1.44, 0.9, 1.44)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uuqds"]
+albedo_color = Color(0.87058824, 0.7647059, 0.60784316, 1)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v0w1d"]
+material = SubResource("StandardMaterial3D_uuqds")
+top_radius = 0.72
+bottom_radius = 0.72
+height = 0.12
+radial_segments = 32
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltarj"]
+albedo_color = Color(0.29803923, 0.33333334, 0.29803923, 1)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_se2f3"]
+material = SubResource("StandardMaterial3D_ltarj")
+top_radius = 0.1
+bottom_radius = 0.32
+height = 0.72
+radial_segments = 16
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v5xhe"]
+size = Vector3(1.44, 0.9, 1.44)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qkhbr"]
+albedo_color = Color(0.22352941, 0.28627452, 0.24705882, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_valjl"]
+material = SubResource("StandardMaterial3D_qkhbr")
+size = Vector3(0.16, 2.1, 1.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k2yd7"]
+size = Vector3(0.16, 2.1, 1.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bj1ip"]
+albedo_color = Color(0.27450982, 0.35686275, 0.29411766, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_d1ui7"]
+material = SubResource("StandardMaterial3D_bj1ip")
+size = Vector3(2.7, 0.02, 1.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5kyfo"]
+albedo_color = Color(0.31764707, 0.3764706, 0.34117648, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_ee7h7"]
+material = SubResource("StandardMaterial3D_5kyfo")
+size = Vector3(0.46, 0.06, 0.46)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_54euq"]
+size = Vector3(13.7, 3, 9.7)
+
+[sub_resource type="Environment" id="Environment_4d2ox"]
+background_mode = 1
+background_color = Color(0.77254903, 0.84705883, 0.8352941, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.94509804, 0.8627451, 1)
+ambient_light_energy = 0.65
+reflected_light_source = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okd8c"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wm4ec"]
+material = SubResource("StandardMaterial3D_okd8c")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tp7o8"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dkh7j"]
+material = SubResource("StandardMaterial3D_tp7o8")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sbae0"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_c2f84"]
+material = SubResource("StandardMaterial3D_sbae0")
+size = Vector3(0.055, 0.105, 0.038)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4wia"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vinsi"]
+material = SubResource("StandardMaterial3D_a4wia")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4nbs"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sskvo"]
+material = SubResource("StandardMaterial3D_t4nbs")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1lan"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_3wyp3"]
+material = SubResource("StandardMaterial3D_q1lan")
+size = Vector3(0.055, 0.105, 0.038)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5c41"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g4xd0"]
+material = SubResource("StandardMaterial3D_x5c41")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmm6b"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8kdbr"]
+material = SubResource("StandardMaterial3D_lmm6b")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0yhmn"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_gkvk5"]
+material = SubResource("StandardMaterial3D_0yhmn")
+size = Vector3(0.055, 0.105, 0.038)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwj4s"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cj3tc"]
+material = SubResource("StandardMaterial3D_cwj4s")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhde7"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2wmnp"]
+material = SubResource("StandardMaterial3D_bhde7")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v0w1d"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_ltarj"]
+material = SubResource("StandardMaterial3D_v0w1d")
+size = Vector3(0.055, 0.105, 0.038)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_se2f3"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v5xhe"]
+material = SubResource("StandardMaterial3D_se2f3")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_valjl"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_k2yd7"]
+material = SubResource("StandardMaterial3D_valjl")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d1ui7"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_54euq"]
+material = SubResource("StandardMaterial3D_d1ui7")
+size = Vector3(0.055, 0.105, 0.038)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dyqx"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8c65o"]
+material = SubResource("StandardMaterial3D_6dyqx")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1ath"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_twvvl"]
+material = SubResource("StandardMaterial3D_y1ath")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kw6by"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_lercf"]
+material = SubResource("StandardMaterial3D_kw6by")
+size = Vector3(0.055, 0.105, 0.038)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gbuu7"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h51eq"]
+material = SubResource("StandardMaterial3D_gbuu7")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgbb8"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_driqk"]
+material = SubResource("StandardMaterial3D_qgbb8")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aryw8"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_ueg7x"]
+material = SubResource("StandardMaterial3D_aryw8")
+size = Vector3(0.055, 0.105, 0.038)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0kef"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uodmn"]
+material = SubResource("StandardMaterial3D_o0kef")
+top_radius = 0.1
+bottom_radius = 0.076
+height = 0.18
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dirf1"]
+albedo_color = Color(0.28235295, 0.2, 0.12941177, 1)
+roughness = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rinws"]
+material = SubResource("StandardMaterial3D_dirf1")
+top_radius = 0.088
+bottom_radius = 0.088
+height = 0.006
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yj5fx"]
+albedo_color = Color(0.98039216, 0.94509804, 0.8627451, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_nlvw3"]
+material = SubResource("StandardMaterial3D_yj5fx")
+size = Vector3(0.055, 0.105, 0.038)
+
+[node name="CafeWorld" type="Node3D" unique_id=1961582648]
+script = ExtResource("1_dmsd5")
+
+[node name="Navigation" type="NavigationRegion3D" parent="." unique_id=99727726]
+navigation_mesh = ExtResource("2_q7kny")
+
+[node name="Geometry" type="Node3D" parent="Navigation" unique_id=1027439201]
+
+[node name="Floor" type="StaticBody3D" parent="Navigation/Geometry" unique_id=1668052762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 1.2)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/Floor" unique_id=1587042875]
+mesh = SubResource("BoxMesh_72e5l")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/Floor" unique_id=1510971532]
+shape = SubResource("BoxShape3D_dcxev")
+
+[node name="BackWall" type="StaticBody3D" parent="Navigation/Geometry" unique_id=335217385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, -5)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/BackWall" unique_id=1361996722]
+mesh = SubResource("BoxMesh_dmsd5")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/BackWall" unique_id=1786629328]
+shape = SubResource("BoxShape3D_juyjj")
+
+[node name="LeftWall" type="StaticBody3D" parent="Navigation/Geometry" unique_id=1031924802]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.4, 0)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/LeftWall" unique_id=2095974182]
+mesh = SubResource("BoxMesh_mnany")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/LeftWall" unique_id=900958830]
+shape = SubResource("BoxShape3D_4d2ox")
+
+[node name="RightWall" type="StaticBody3D" parent="Navigation/Geometry" unique_id=651445463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1.4, 0)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/RightWall" unique_id=892442745]
+mesh = SubResource("BoxMesh_wyylx")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/RightWall" unique_id=43219028]
+shape = SubResource("BoxShape3D_5kyfo")
+
+[node name="FrontLeft" type="StaticBody3D" parent="Navigation/Geometry" unique_id=1878039593]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.55, 5)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/FrontLeft" unique_id=556284500]
+mesh = SubResource("BoxMesh_okd8c")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/FrontLeft" unique_id=1190838216]
+shape = SubResource("BoxShape3D_wm4ec")
+
+[node name="FrontRight" type="StaticBody3D" parent="Navigation/Geometry" unique_id=1976943816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0.55, 5)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/FrontRight" unique_id=1920185092]
+mesh = SubResource("BoxMesh_tp7o8")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/FrontRight" unique_id=1072782352]
+shape = SubResource("BoxShape3D_dkh7j")
+
+[node name="Counter" type="StaticBody3D" parent="Navigation/Geometry" unique_id=1332909694]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.7)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/Counter" unique_id=1308286853]
+mesh = SubResource("BoxMesh_sbae0")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/Counter" unique_id=490203997]
+shape = SubResource("BoxShape3D_c2f84")
+
+[node name="CounterTop" type="Node3D" parent="Navigation/Geometry" unique_id=1191743338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -1.7)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/CounterTop" unique_id=820743947]
+mesh = SubResource("BoxMesh_a4wia")
+
+[node name="BackShelf" type="StaticBody3D" parent="Navigation/Geometry" unique_id=308154819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4.5)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/BackShelf" unique_id=1077888881]
+mesh = SubResource("BoxMesh_t4nbs")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/BackShelf" unique_id=1850936959]
+shape = SubResource("BoxShape3D_sskvo")
+
+[node name="BackShelfTrim" type="Node3D" parent="Navigation/Geometry" unique_id=560925531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -4.13)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/BackShelfTrim" unique_id=214098506]
+mesh = SubResource("BoxMesh_q1lan")
+
+[node name="CoffeeMachine" type="Node3D" parent="Navigation/Geometry" unique_id=1003213300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 1.38, -1.7)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/CoffeeMachine" unique_id=1190804509]
+mesh = SubResource("BoxMesh_x5c41")
+
+[node name="MachinePanel" type="Node3D" parent="Navigation/Geometry/CoffeeMachine" unique_id=451518266]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.32)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/CoffeeMachine/MachinePanel" unique_id=2130633394]
+mesh = SubResource("BoxMesh_lmm6b")
+
+[node name="MachineSpout" type="Node3D" parent="Navigation/Geometry/CoffeeMachine" unique_id=1954855783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0.38)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/CoffeeMachine/MachineSpout" unique_id=1602887090]
+mesh = SubResource("BoxMesh_0yhmn")
+
+[node name="Table1" type="StaticBody3D" parent="Navigation/Geometry" unique_id=1601558376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7, 0, 1.4)
+
+[node name="Top" type="MeshInstance3D" parent="Navigation/Geometry/Table1" unique_id=2102324599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.79, 0)
+mesh = SubResource("CylinderMesh_cwj4s")
+
+[node name="Pedestal" type="MeshInstance3D" parent="Navigation/Geometry/Table1" unique_id=984116721]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+mesh = SubResource("CylinderMesh_bhde7")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/Table1" unique_id=2125453457]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+shape = SubResource("BoxShape3D_2wmnp")
+
+[node name="Table2" type="StaticBody3D" parent="Navigation/Geometry" unique_id=103369121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 0, 1.4)
+
+[node name="Top" type="MeshInstance3D" parent="Navigation/Geometry/Table2" unique_id=1049735836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.79, 0)
+mesh = SubResource("CylinderMesh_v0w1d")
+
+[node name="Pedestal" type="MeshInstance3D" parent="Navigation/Geometry/Table2" unique_id=1768085469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+mesh = SubResource("CylinderMesh_se2f3")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/Table2" unique_id=1518323616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+shape = SubResource("BoxShape3D_v5xhe")
+
+[node name="MenuBoard" type="StaticBody3D" parent="Navigation/Geometry" unique_id=2038967339]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 1.05, 2.5)
+
+[node name="Visual" type="MeshInstance3D" parent="Navigation/Geometry/MenuBoard" unique_id=2089320835]
+mesh = SubResource("BoxMesh_valjl")
+
+[node name="Shape" type="CollisionShape3D" parent="Navigation/Geometry/MenuBoard" unique_id=863461696]
+shape = SubResource("BoxShape3D_k2yd7")
+
+[node name="Decor" type="Node3D" parent="." unique_id=292659213]
+
+[node name="EntryMat" type="Node3D" parent="Decor" unique_id=1088892750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016, 5.4)
+
+[node name="Visual" type="MeshInstance3D" parent="Decor/EntryMat" unique_id=636369813]
+mesh = SubResource("BoxMesh_d1ui7")
+
+[node name="RecycleTray" type="MeshInstance3D" parent="Decor" unique_id=448296428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 1.15, -1.7)
+mesh = SubResource("BoxMesh_ee7h7")
+
+[node name="MenuText" type="Label3D" parent="." unique_id=310660956]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.1, 1.5, 2.5)
+pixel_size = 0.007
+modulate = Color(0.96862745, 0.9254902, 0.827451, 1)
+text = "COFFEE
+美式  ·  拿铁
+手冲  ·  咖啡时光"
+font_size = 40
+outline_size = 2
+
+[node name="Brand" type="Label3D" parent="." unique_id=1248843198]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, -4.07)
+pixel_size = 0.007
+modulate = Color(0.9490196, 0.8745098, 0.69803923, 1)
+text = "慢  杯   /   S L O W   C U P"
+font_size = 64
+outline_size = 0
+
+[node name="PickupLabel" type="Label3D" parent="." unique_id=165906993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -1.275)
+modulate = Color(0.92941177, 0.87058824, 0.7529412, 1)
+text = "取 餐  /  PICK UP"
+font_size = 42
+outline_size = 0
+
+[node name="Anchors" type="Node3D" parent="." unique_id=1818068562]
+
+[node name="entrance" type="Marker3D" parent="Anchors" unique_id=123778465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.3)
+
+[node name="counter" type="Marker3D" parent="Anchors" unique_id=1326019168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.8)
+
+[node name="coffee_machine" type="Marker3D" parent="Anchors" unique_id=2105961111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0, -2.8)
+
+[node name="pickup_spot" type="Marker3D" parent="Anchors" unique_id=2105578092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+
+[node name="menu_board" type="Marker3D" parent="Anchors" unique_id=374967280]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.25, 0, 2.8)
+
+[node name="table_1" type="Marker3D" parent="Anchors" unique_id=1592574811]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 2.7)
+
+[node name="table_2" type="Marker3D" parent="Anchors" unique_id=1150680289]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 2.7)
+
+[node name="demo_spot" type="Marker3D" parent="Anchors" unique_id=1370262161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7, 0, -2.6)
+
+[node name="recycle_spot" type="Marker3D" parent="Anchors" unique_id=1914100967]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 0, -2.8)
+
+[node name="Sockets" type="Node3D" parent="." unique_id=1224199977]
+
+[node name="Pickup" type="Marker3D" parent="Sockets" unique_id=1762537136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14, -1.5)
+
+[node name="Recycle" type="Marker3D" parent="Sockets" unique_id=401532704]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 1.14, -1.7)
+
+[node name="CafeZone" type="Area3D" parent="." unique_id=1709051858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape3D" parent="CafeZone" unique_id=1036946393]
+shape = SubResource("BoxShape3D_54euq")
+
+[node name="Environment" type="WorldEnvironment" parent="." unique_id=325250069]
+environment = SubResource("Environment_4d2ox")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=52104756]
+transform = Transform3D(0.7648422, 0.50463307, -0.40045214, 0, 0.62161, 0.7833269, 0.64421767, -0.5991215, 0.47543356, 0, 0, 0)
+light_color = Color(1, 0.9411765, 0.84313726, 1)
+light_energy = 1.7
+shadow_enabled = true
+directional_shadow_max_distance = 35.0
+
+[node name="OverviewCamera" type="Camera3D" parent="." unique_id=1935406157]
+transform = Transform3D(1, 0, 0, 0, 0.62161, 0.7833269, 0, -0.7833269, 0.62161, 0, 12.8, 11)
+projection = 1
+current = true
+size = 18.0
+far = 100.0
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=534586027]
+script = ExtResource("1_juyjj")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig" unique_id=1470266947]
+transform = Transform3D(1, 0, 0, 0, 0.9393727, 0.3428978, 0, -0.3428978, 0.9393727, 0, 0, 0)
+spring_length = 4.8
+margin = 0.15
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D" unique_id=1971886653]
+fov = 65.0
+far = 100.0
+
+[node name="HarnessClient" type="Node" parent="." unique_id=210137596]
+script = ExtResource("2_uds03")
+
+[node name="Observation" type="Node" parent="." unique_id=411763164]
+script = ExtResource("3_mnany")
+
+[node name="WorldActionDriver" type="Node" parent="." unique_id=1176872573]
+script = ExtResource("4_4d2ox")
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=1214870554]
+script = ExtResource("2_juyjj")
+
+[node name="Overlay" type="Control" parent="Hud" unique_id=551130521]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("3_uds03")
+
+[node name="Header" type="HBoxContainer" parent="Hud/Overlay" unique_id=2043030573]
+layout_mode = 0
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 62.0
+theme_override_constants/separation = 14
+
+[node name="Brand" type="Label" parent="Hud/Overlay/Header" unique_id=967151373]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 27
+text = "慢 杯  /  S L O W  C U P"
+
+[node name="Identity" type="Label" parent="Hud/Overlay/Header" unique_id=1329905276]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+text = "当前：顾客 A · 店外"
+
+[node name="PlayerA" type="Button" parent="Hud/Overlay/Header" unique_id=578149651]
+layout_mode = 2
+focus_mode = 0
+text = "顾客 A"
+
+[node name="PlayerB" type="Button" parent="Hud/Overlay/Header" unique_id=1391133736]
+layout_mode = 2
+focus_mode = 0
+text = "顾客 B"
+
+[node name="Status" type="Label" parent="Hud/Overlay/Header" unique_id=1424269895]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "尚未连接"
+
+[node name="Reconnect" type="Button" parent="Hud/Overlay/Header" unique_id=1821607120]
+layout_mode = 2
+focus_mode = 0
+text = "重连"
+
+[node name="Sidebar" type="PanelContainer" parent="Hud/Overlay" unique_id=214907481]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -364.0
+offset_top = 98.0
+offset_right = -24.0
+offset_bottom = -24.0
+
+[node name="Content" type="VBoxContainer" parent="Hud/Overlay/Sidebar" unique_id=358809302]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Title" type="Label" parent="Hud/Overlay/Sidebar/Content" unique_id=409449073]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "在这里，慢一点。"
+
+[node name="Mode" type="Label" parent="Hud/Overlay/Sidebar/Content" unique_id=590815174]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "DeepSeek · 等待连接"
+autowrap_mode = 3
+
+[node name="Activity" type="Label" parent="Hud/Overlay/Sidebar/Content" unique_id=19340832]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "订单：暂无进行中的订单"
+autowrap_mode = 3
+
+[node name="Tabs" type="TabContainer" parent="Hud/Overlay/Sidebar/Content" unique_id=308503343]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Interaction" type="VBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs" unique_id=396980185]
+layout_mode = 2
+theme_override_constants/separation = 8
+metadata/_tab_index = 0
+
+[node name="DrinksTitle" type="Label" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=1527222673]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "今日饮品"
+
+[node name="Drinks" type="HBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=451102701]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Americano" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Drinks" unique_id=440537615]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "美式"
+
+[node name="Latte" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Drinks" unique_id=1095738214]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "拿铁"
+
+[node name="Rule1" type="HSeparator" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=1085191872]
+layout_mode = 2
+
+[node name="PromptText" type="RichTextLabel" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=1095000308]
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+focus_mode = 2
+text = "走进店里，向老板娘点单或开启一个话题。"
+scroll_following = true
+selection_enabled = true
+
+[node name="Choices" type="HBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=1586415188]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Choice0" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Choices" unique_id=1902701270]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "接受"
+
+[node name="Choice1" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Choices" unique_id=1177022859]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "稍后"
+
+[node name="Choice2" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Choices" unique_id=1409350237]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "拒绝"
+
+[node name="Rule2" type="HSeparator" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=141280344]
+layout_mode = 2
+
+[node name="Topic" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=1063991002]
+layout_mode = 2
+focus_mode = 0
+text = "聊聊手冲咖啡"
+
+[node name="Progress" type="HBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=252626547]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Next" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Progress" unique_id=1925816126]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "下一段"
+
+[node name="Pause" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Progress" unique_id=1878029058]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "暂停"
+
+[node name="Resume" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Progress" unique_id=956252263]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "继续"
+
+[node name="NextVisit" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=403505302]
+layout_mode = 2
+focus_mode = 0
+text = "这次先到这里，下次继续"
+
+[node name="Rule3" type="HSeparator" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=886183365]
+layout_mode = 2
+
+[node name="Order" type="HBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=1667415015]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Collect" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Order" unique_id=1796254207]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "领取 · E"
+
+[node name="Pause" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Order" unique_id=356648646]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "稍等取杯"
+
+[node name="Resume" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction/Order" unique_id=1713424962]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "可以了"
+
+[node name="CancelOrder" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=2100437881]
+layout_mode = 2
+focus_mode = 0
+text = "取消当前饮品"
+
+[node name="Activity" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=508353298]
+layout_mode = 2
+focus_mode = 0
+text = "参与咖啡口味小测"
+
+[node name="Hint" type="Label" parent="Hud/Overlay/Sidebar/Content/Tabs/Interaction" unique_id=1665691018]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "WASD 行走 · 右键拖动镜头
+Ctrl+1 / 2 切换顾客 · F2 俯视
+Enter 发言 · Tab 说话对象"
+autowrap_mode = 3
+
+[node name="Memory" type="VBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs" unique_id=2006412583]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+metadata/_tab_index = 1
+
+[node name="Refresh" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Memory" unique_id=761292983]
+layout_mode = 2
+focus_mode = 0
+text = "查看当前顾客的记录"
+
+[node name="MemoryText" type="RichTextLabel" parent="Hud/Overlay/Sidebar/Content/Tabs/Memory" unique_id=1945520956]
+custom_minimum_size = Vector2(0, 270)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+text = "点击查看，读取真实保存的资料。"
+scroll_following = true
+selection_enabled = true
+
+[node name="Preference" type="LineEdit" parent="Hud/Overlay/Sidebar/Content/Tabs/Memory" unique_id=198308368]
+layout_mode = 2
+placeholder_text = "新的咖啡偏好，如少糖、喜欢拿铁"
+max_length = 100
+
+[node name="SavePreference" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Memory" unique_id=1796812197]
+layout_mode = 2
+focus_mode = 0
+text = "记下新偏好"
+
+[node name="ForgetTopic" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/Memory" unique_id=571638744]
+layout_mode = 2
+focus_mode = 0
+text = "忘记手冲话题的记录"
+
+[node name="State" type="VBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs" unique_id=954826457]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="StateText" type="RichTextLabel" parent="Hud/Overlay/Sidebar/Content/Tabs/State" unique_id=757730829]
+custom_minimum_size = Vector2(0, 450)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_font_sizes/normal_font_size = 13
+text = "后端状态将在连接后显示。"
+scroll_following = true
+selection_enabled = true
+
+[node name="Recovery" type="HBoxContainer" parent="Hud/Overlay/Sidebar/Content/Tabs/State" unique_id=848805263]
+layout_mode = 2
+
+[node name="RetryPending" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/State/Recovery" unique_id=1808706665]
+layout_mode = 2
+focus_mode = 0
+text = "重试未答问题"
+
+[node name="RetryCleanup" type="Button" parent="Hud/Overlay/Sidebar/Content/Tabs/State/Recovery" unique_id=1409026198]
+layout_mode = 2
+focus_mode = 0
+text = "重试杯子回收"
+
+[node name="Chat" type="PanelContainer" parent="Hud/Overlay" unique_id=236229713]
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -254.0
+offset_right = 724.0
+offset_bottom = -24.0
+
+[node name="Content" type="VBoxContainer" parent="Hud/Overlay/Chat" unique_id=379400244]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Hud/Overlay/Chat/Content" unique_id=15538078]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "咖啡馆里的对话"
+
+[node name="Transcript" type="RichTextLabel" parent="Hud/Overlay/Chat/Content" unique_id=174227579]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+scroll_following = true
+selection_enabled = true
+
+[node name="Compose" type="HBoxContainer" parent="Hud/Overlay/Chat/Content" unique_id=1400764085]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Target" type="OptionButton" parent="Hud/Overlay/Chat/Content/Compose" unique_id=43521773]
+custom_minimum_size = Vector2(98, 0)
+layout_mode = 2
+
+[node name="Input" type="LineEdit" parent="Hud/Overlay/Chat/Content/Compose" unique_id=949552341]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "向老板娘说点什么…"
+max_length = 600
+
+[node name="Send" type="Button" parent="Hud/Overlay/Chat/Content/Compose" unique_id=156569821]
+layout_mode = 2
+focus_mode = 0
+text = "发送"
+
+[node name="PlayerA" parent="." unique_id=728702109 instance=ExtResource("5_q7kny")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
+
+[node name="PlayerB" parent="." unique_id=70603801 instance=ExtResource("5_q7kny")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.05, 6)
+player_id = "p_B"
+display_name = "顾客 B"
+
+[node name="Owner" parent="." unique_id=998494232 instance=ExtResource("6_wyylx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -2.8)
+
+[node name="CupRack" type="Node3D" parent="." unique_id=1506252959]
+
+[node name="Cup01" type="Node3D" parent="CupRack" unique_id=1343341689]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup01" unique_id=1139768425]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_wm4ec")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup01" unique_id=336042312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_dkh7j")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup01" unique_id=1599924184]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_c2f84")
+
+[node name="Cup02" type="Node3D" parent="CupRack" unique_id=1209769149]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup02" unique_id=59291210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_vinsi")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup02" unique_id=15571921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_sskvo")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup02" unique_id=256537706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_3wyp3")
+
+[node name="Cup03" type="Node3D" parent="CupRack" unique_id=152569790]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup03" unique_id=374951356]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_g4xd0")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup03" unique_id=567145517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_8kdbr")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup03" unique_id=1936932982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_gkvk5")
+
+[node name="Cup04" type="Node3D" parent="CupRack" unique_id=1330661342]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup04" unique_id=1118442394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_cj3tc")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup04" unique_id=951891988]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_2wmnp")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup04" unique_id=1226842838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_ltarj")
+
+[node name="Cup05" type="Node3D" parent="CupRack" unique_id=1923056591]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup05" unique_id=1655408725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_v5xhe")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup05" unique_id=1486242243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_k2yd7")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup05" unique_id=1320840298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_54euq")
+
+[node name="Cup06" type="Node3D" parent="CupRack" unique_id=1824912999]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup06" unique_id=1893100495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_8c65o")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup06" unique_id=1726867244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_twvvl")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup06" unique_id=814920549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_lercf")
+
+[node name="Cup07" type="Node3D" parent="CupRack" unique_id=655734188]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup07" unique_id=1653507552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_h51eq")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup07" unique_id=1898676421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_driqk")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup07" unique_id=1345726354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_ueg7x")
+
+[node name="Cup08" type="Node3D" parent="CupRack" unique_id=110137087]
+visible = false
+
+[node name="Ceramic" type="MeshInstance3D" parent="CupRack/Cup08" unique_id=1633322362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_uodmn")
+
+[node name="Coffee" type="MeshInstance3D" parent="CupRack/Cup08" unique_id=156491858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.179, 0)
+mesh = SubResource("CylinderMesh_rinws")
+
+[node name="Handle" type="MeshInstance3D" parent="CupRack/Cup08" unique_id=1193862084]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.112, 0.105, 0)
+mesh = SubResource("BoxMesh_nlvw3")
